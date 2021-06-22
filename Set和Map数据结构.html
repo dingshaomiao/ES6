@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    var findRepeatNumber = function (nums) {
+      let tag = null;
+      const obj = {}
+      nums.every(num => {
+        if (obj[num]) {
+          tag = num;
+          return false
+        } else {
+          obj[num] = num
+          return true
+        }
+      })
+      return tag
+    };
+    let result = findRepeatNumber([1, 1, 2, 3, 5, 5])
+    console.log(result);
+
+    var majorityElement = function (nums) {
+      const res = new Map();
+      nums.forEach(a => {
+        if (res.has(a)) {
+          res.set(a, res.get(a) + 1)
+        } else {
+          res.set(a, 1)
+        }
+      })
+      let arr = Array.from(res.values())
+      let arr1 = Array.from(res.keys())
+      console.log(arr);
+      console.log(arr1);
+      return arr1[arr.indexOf(Math.max.apply(null, arr))]
+    };
+
+    let a = majorityElement([1, 2, 2, 2, 3, 34, 5, 5]);
+    console.log(a);
+
+    const items = new Set([1, 2, 3, 4, 4, 4, 5])
+    console.log(items);
+    console.log(items.size);
+    const array = Array.from(items);
+    console.log(array);
+
+    console.log([...items]);
+
+    let set = new Set(['red', 'green', 'blue']);
+    console.log(set.keys());
+    console.log(set.values());
+    console.log(set.entries());
+    for (let item of set) {
+      console.log(item);
+    }
+    for (let item of set.keys()) {
+      console.log(item);
+    }
+    for (let item of set.values()) {
+      console.log(item);
+    }
+
+    for (let item of set.entries()) {
+      console.log(item);
+    }
+    console.log('=======================================');
+
+    // const m = new Map();
+    // const o = {
+    //   p: 'Hello World'
+    // }
+    // m.set(o, 'content')
+    // console.log(m);
+    // console.log(m.get(o));
+    // console.log(m.delete(o));
+    // console.log(m.has(o));
+
+    // const map = new Map();
+    // map.set('a', 1)
+    // map.set('a', 2)
+    // console.log(map);
+    console.log('========================================');
+    const info = {
+      name: 'dsm',
+      1: 19,
+      height: 1.88,
+      color: 'blue'
+    }
+
+    console.log(Object.keys(info));
+    console.log(Object.keys(info).length);
+
+    for (let item in info) {
+      console.log(item);
+    }
+
+    let cont = document.getElementById('cont')
+    let m = new Map()
+    m.set(cont, 'hello,world')//dom对象作为键
+    m.set(['username'], 'jack')//数组作为键
+    m.set(true, 1)//boolean类型作为键
+    //可以保持原有顺序打印
+    for (let [key, value] of m) {
+      console.log(key)
+
+    }
+
+    let obj = new Object()
+    obj['jack'] = 1
+    obj[0] = 2
+    obj[5] = 3
+    obj['tom'] = 4
+    //填入Object的元素key是自动按照字符串排序的，数字排在前面
+    for (let k in obj) {
+      console.log(k) // 0 5 jack tom
+    }
+
+    const arr = ["foo", "bar", "baz"];
+    const arrChangeMap = (arr) => new Map(arr.map((value, key) => [key, value]));
+    console.log(arrChangeMap(arr));
+
+    let yyy = [1, 2, 3, 4];
+    let newYYY = yyy.map(item => item * 2);
+    console.log(yyy);
+    console.log(newYYY);
+
+
+    let zoom = [1, 2, 3, 4];
+    let user = [{ id: 1, name: 'dsm', status: 'offLine' }, { id: 2, name: 'ccy', status: 'offLine' }, { id: 6, name: 'yyh', status: 'offLine' }, { id: 7, name: 'cmc', status: 'offLine' }]
+    let userIds = [1, 2, 6, 7]; // 需要for循环获取所有的ids
+    // 将zoom和userIds取交集
+    let connect = [1, 2];
+    for (let index in user) {
+      if (connect.includes(user[index].id)) {
+        user[index].status = 'onLine'
+      }
+    }
+    console.log(user);
+  </script>
+</body>
+
+</html>
