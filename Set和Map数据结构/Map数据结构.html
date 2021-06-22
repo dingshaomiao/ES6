@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div id="foo"></div>
+  <div id="bar"></div>
+</body>
+<script>
+  const m = new Map();
+  const o = {
+    p: 'Hello World'
+  }
+  m.set(o, 'content')
+  console.log(m);
+
+  const c = new Map();
+  const hello = function () {
+    console.log('hello');
+  }
+  c.set(hello, 'hello es6')
+  console.log(c);
+
+  const map1 = new Map([
+    ['F', 'no'],
+    ['T', 'yes']
+  ])
+  for (let key of map1.keys()) {
+    console.log(key);
+  }
+  for (let value of map1.values()) {
+    console.log(value);
+  }
+  for (let item of map1.entries()) {
+    console.log(item[0], item[1]);
+  }
+  for (let [key, value] of map1.entries()) {
+    console.log(key, value);
+  }
+
+
+  const map2 = new WeakMap();
+  // map2.set(1, 2)
+  // console.log(map2);
+
+
+  const e1 = document.getElementById('foo')
+  const e2 = document.getElementById('bar')
+  console.log(e1);
+  console.log(e2);
+</script>
+
+</html>

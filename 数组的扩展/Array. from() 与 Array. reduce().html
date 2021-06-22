@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+
+</body>
+<script>
+
+  // let arrayLike = {
+  //   0: "tom",
+  //   1: "65",
+  //   2: "男",
+  //   3: ["jane", "john", "Mary"],
+  //   length: 4
+  // };
+  // let arr = Array.from(arrayLike);
+  // console.log(arr); // ['tom','65','男',['jane','john','Mary']]
+
+  // let arrayLike = {
+  //   name: "tom",
+  //   age: "65",
+  //   sex: "男",
+  //   friends: ["jane", "john", "Mary"],
+  //   length: 4
+  // };
+  // let arr = Array.from(arrayLike);
+  // console.log(arr);
+  let arr = [12, 45, 97, 9797, 564, 134, 45642];
+  let set = new Set(arr);
+  console.log(set);
+  console.log([...set]);
+  // console.log(Array.from(set)); // [ 12, 45, 97, 9797, 564, 134, 45642 ]
+
+  // 3、将字符串转换为数组：
+
+  let str = "hello world!";
+  console.log(Array.from(str)); // ["h", "e", "l", "l", "o", " ", "w", "o", "r", "l", "d", "!"]
+
+  console.log(Array.from([12, 45, 47, 56, 213, 4654, 154]));
+  // 像这种情况，Array.from会返回一个一模一样的新数组
+
+  function combine() {
+    console.log('arguments', arguments);
+    let arr = [].concat.apply([], arguments);  //没有去重复的新数组
+    return Array.from(new Set(arr));
+  }
+
+  var m = [1, 2, 2], n = [2, 3, 3];
+  console.log(combine(m, n));
+</script>
+
+</html>
