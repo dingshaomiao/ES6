@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <script>
+    function test(params) {
+      return new Promise((resolve, reject) => {
+        resolve('123')
+        // reject('456')
+      })
+    }
+    console.log(test());
+    test().then(res => {
+      console.log('res', res);
+    }).catch(err => {
+      console.log('err', err);
+    })
+
+    function aaa(params) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          // resolve('Hello World')
+          reject('Error Data')
+        })
+      }).then(data => {
+        console.log(data);
+      }).catch(err => {
+        console.log(err);
+      })
+    }
+
+    var promise = new Promise((resolve, reject) => {
+      if (true) {
+        resolve('Success')
+      } else {
+        reject('Error')
+      }
+    })
+    console.log('Promise实例', Promise, Promise.prototype, Promise.prototype.hasOwnProperty('then'));
+
+    promise.then(res => {
+      console.log(res);
+    }).catch(err => {
+      console.log(err);
+    })
+
+    function bbb(params) {
+      return new Promise((resolve, reject) => {
+        setTimeout(() => {
+          resolve('Hello World')
+          // reject('123456')
+        })
+      }).then(data => {
+        console.log('data', data);
+        return '123'
+      }).catch(err => {
+        console.log('err', err);
+        return '456'
+      })
+    }
+
+    function ccc(params) {
+      return new Promise((resolve, reject) => {
+        resolve('111---111')
+      })
+    }
+
+    async function getMessage(params) {
+      let resultB = await bbb();
+      let resultC = await ccc();
+      bbb().then(res => {
+        console.log('bbb-bbb', res);
+      })
+      ccc().then(res => {
+        console.log('ccc-ccc', res);
+      })
+      console.log(resultB);
+      console.log(resultC);
+    }
+
+    getMessage();
+
+
+    function ddd(params) {
+      return Promise.resolve('dsm')
+    }
+
+    ddd().then(res => {
+      console.log('ddd---ddd', res);
+    })
+
+
+    Promise.resolve('123');
+    new Promise(resolve => {
+      resolve('123')
+    })
+
+    Promise.resolve('456').then(res => {
+      console.log(res);
+    })
+
+    Promise.reject('error').catch(err => {
+      console.log(err);
+    })
+
+  </script>
+</body>
+
+</html>

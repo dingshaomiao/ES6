@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Document</title>
+</head>
+
+<body>
+  <div>参考链接：https://segmentfault.com/a/1190000007535316</div>
+</body>
+<script>
+  function a(params) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        console.log('111');
+        resolve()
+      }, 3000)
+    })
+  }
+
+  function b(params) {
+    console.log('222');
+  }
+  /** 
+   * 不采用async和await
+   * 先打印出111，再打印出222， 
+  */
+  // a().then(res => {
+  //   b();
+  // })
+  /**
+   * 采用async和await
+   */
+
+  async function cAsync(params) {
+    await a();
+    b();
+  }
+  cAsync();
+
+  // 以上代码相当于直接return一个Promise.resolve(Hello Async)
+  async function testAsync(params) {
+    return 'Hello Async'
+  }
+
+  let result = testAsync();
+  console.log(result);
+
+
+  function takeLongTime(params) {
+    return new Promise(resolve => {
+      setTimeout(() => {
+        resolve('long_time_value')
+      }, 3000)
+    })
+  }
+
+  async function test(params) {
+    let res = await takeLongTime();
+    console.log(res);
+    console.log('next message');
+  }
+
+  test();
+
+</script>
+
+</html>

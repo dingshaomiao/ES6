@@ -1,0 +1,114 @@
+< !DOCTYPE html>
+  <html lang="en">
+
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Document</title>
+  </head>
+
+  <body>
+
+  </body>
+  <script>
+    let util = require('util');
+    let exec = util.promisify(require('child_process').exec);
+    let fs = require('fs');
+
+    console.log(process.env.WORKSPACE);
+
+    //jenkins apk 输出文件目录
+    srcApkDir = process.env.WORKSPACE + "\\app\\build\\outputs\\apk\\release";
+    srcApkPath = "";
+    srcApkName = "";
+
+    function explorer(path) {
+      return new Promise(resolve => {
+        fs.readdir(path, function (err, files) {
+          if (err) {
+            console.log('error:\n' + err);
+            return;
+          }
+          files.forEach(function (file) {
+            fs.stat(path + '\\' + file, function (err, stat) {
+              if (err) { console.log(err); return; }
+              if (stat.isDirectory()) {
+                // 如果是文件夹遍历
+                explorer(path + '\\' + file);
+              } else {
+                // 读出所有的文件
+                console.log('文件名:' + path + '\\' + file);
+                var index = file.lastIndexOf(".");
+                var ext = file.substr(index + 1);
+                if ("apk" == ext) {
+                  //获取apk文件路径
+                  srcApkPath = path + '\\' + file;
+                  //获取apk文件名称
+                  srcApkName = file;
+                };
+
+              }
+            });
+          });
+        });
+        resolve();
+      })
+
+    };
+
+    const run = async () => {
+      // 获取项目名称
+      let package = require(process.env.WORKSPACE + '\\package.json');
+
+      if (!package || !package.name) {
+        console.log('Application name is empty.');
+        return;
+      }
+
+      console.log('Application name: ' + package.name);
+
+
+      if (!srcApkPath) {
+        console.log('Apk file is empty.');
+        return;
+      }
+
+      let mountDir = 'Y:\\软件发布\\Umeet3.0标准版\\客户端\\android\\'
+      //根据不同的项目名称创建文件夹
+      let dstDir = mountDir + package.name;
+
+      let filePath = {
+        src: srcApkPath,
+        dest: dstDir + '\\' + srcApkName,
+      }
+
+      try {
+        // 如果目录不存在，则挂载远程目录
+        let isExists = await fs.promises.stat(mountDir).catch(e => false);
+        if (!isExists) {
+          console.log('Mount directory.');
+          const { stdout, stderr } = await exec('net use Y: \\\\nas.systec.com.cn\\dev "Cisco,123#@!" /user:SYSTEC\\lbjie');
+          console.log('Mount directory ended.');
+        }
+        // 目录挂载后，仍然没有该目录，创建目录
+        isExists = await fs.promises.stat(dstDir).catch(e => false);
+        if (!isExists) {
+          console.log('Create directory: ' + dstDir);
+          await fs.promises.mkdir(dstDir);
+        }
+        console.log('Copy file: ' + filePath.src + ' => ' + filePath.dest);
+        fs.promises.copyFile(filePath.src, filePath.dest);
+      } catch (e) {
+        console.log('Error: ' + e);
+      }
+    };
+
+    function main(params) {
+      await explorer(srcApkDir);
+      run();
+    }
+
+    main(); // 先执行explorer()方法，再执行run()方法
+  </script>
+
+  </html>
