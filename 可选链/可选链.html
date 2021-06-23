@@ -1,0 +1,44 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>可选链</title>
+</head>
+
+<body>
+
+</body>
+<script>
+  // 可选链的用途
+  // API response object
+  const person = {
+    details: {
+      firstName: 0,
+      lastName: ''
+    },
+    jobs: [
+      'teacher',
+      'doctor'
+    ]
+  }
+  // Getting the firstName
+  // const personFirstName = person.details.name.firstName;
+  // 当firstName为0或空字符串的时候
+  const personFirstName = person?.details?.name?.firstName ?? 'stranger'; // 0
+  // const personFirstName = person?.details?.name?.firstName || 'stranger'; // stranger
+  const personLastName = person?.details?.name?.lastName ?? 'stranger'; // ''
+  // const personLastName = person?.details?.name?.lastName || 'stranger'; // stranger
+  console.log('personFirstName', personFirstName);
+  console.log('personLastName', personLastName);
+  let value = null;
+  console.log(typeof value);
+  console.log(Boolean(parseInt('0')));
+
+
+
+</script>
+
+</html>
